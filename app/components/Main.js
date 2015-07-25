@@ -1,6 +1,6 @@
-var React = require('react');
-var RouteHandler = require('react-router').RouteHandler;
-var SearchGithub = require('./SearchGithub');
+import React from 'react';
+import { RouteHandler } from 'react-router';
+import SearchGithub from './SearchGithub';
 
 var Main = React.createClass({
   render: function() {
@@ -12,11 +12,11 @@ var Main = React.createClass({
           </div>
         </nav>
         <div className='container'>
-          <RouteHandler />
+          <RouteHandler {...this.props}/>
         </div>
       </div>
       )
   }
 });
 
-module.exports = Main;
+export default Main;
