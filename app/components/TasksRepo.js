@@ -8,24 +8,26 @@ class TasksRepo extends React.Component {
     super(props);
     this.state = {
       tasks: [
-        {description: "Test task1",
+        {id: 1,
+         description: "Task 1",
          estimate: 5,
          actual: 0,
          completion: 0,
          subtasks: []},
-        {description: "Test task2",
+        {id: 2,
+         description: "Task 2",
          estimate: 2,
          actual: 1,
          completion: 50.0,
          subtasks: [
-            {description: "Task2 - subtask 1",
-             estimate: 1,
-             actual: 1,
-             completion: 100.0},
-            {description: "Task2 - subtask 2",
-             estimate: 1,
-             actual: 0,
-             completion: 0.0}
+            // {description: "Task2 - subtask 1",
+            //  estimate: 1,
+            //  actual: 1,
+            //  completion: 100.0},
+            // {description: "Task2 - subtask 2",
+            //  estimate: 1,
+            //  actual: 0,
+            //  completion: 0.0}
          ]},
         // {description: "Test task3",
         //  estimate: 2,
@@ -70,16 +72,44 @@ class TasksRepo extends React.Component {
   //   base.removeBinding(this.ref);
   //   this.init();
   // }
-  // handleAddNote(noteValue) {
-  //   base.post(this.username(), {
-  //     data: this.state.notes.concat([noteValue])
-  //   });
-  // }
+  handleAddTask() {
+    var prevTasks = this.state.tasks;
+    var newTask = {
+      id: prevTasks.length + 1,
+      description: `Task ${prevTasks.length + 1}`,
+      estimate: 5,
+      actual: 0,
+      completion: 0.0,
+      subtasks: []
+    };
+    this.setState({
+      tasks: prevTasks.concat([newTask])
+    });
+  }
+  handleRemoveTask(tid) {
+    var newTasks = this.state.tasks;
+    var length = newTasks.length;
+    var i = length;
+
+    while(i--) {
+      if(newTasks[i].id === tid) {
+        newTasks = newTasks
+                      .slice(0,i)
+                      .concat(newTasks.slice(i+1,length));
+      }
+    }
+
+    this.setState({
+      tasks: newTasks
+    });
+  }
   render() {
     return (
       <div className='row'>
+        <a className="button" onClick={this.handleAddTask.bind(this)}> Add Task </a>
         <div className='col-md-12'>
-          <TaskList tasks={this.state.tasks} />
+          <TaskList tasks={this.state.tasks}
+                    remove_task_fun={this.handleRemoveTask.bind(this)} />
         </div>
       </div>
     )
