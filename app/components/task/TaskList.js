@@ -3,43 +3,41 @@ import Task from './Task';
 
 class TaskList extends React.Component {
   render() {
-    // if(this.props.subtasks_list && this.props.tasks) {
-    //   var tasks = this.props.tasks.map((task, index) => {
-    //     return (
-    //       <Task task={task} index={index+1} subtask={true} />
-    //     )
-    //   });
-    //   return (
-    //     <div>
-    //       {tasks}
-    //     </div>
-    //   )
-    // } else {
-      var removeFun = this.props.remove_task_fun;
-      var tasks = this.props.tasks.map((task, index) => {
-        return (
-          <Task task={task} 
-                index={index+1} 
-                remove_task_fun={removeFun} />
-        )
-      });
+    var tasks = this.props.tasks;
+    var removeFun = this.props.remove_task_fun;
 
-      return (
-        <table className="table table-hover">
-          <thead>
-            <tr>
-              <th width="10%">&nbsp;</th>
-              <th width="10%">#</th>
-              <th width="40%">Description</th>
-              <th width="40%">Estimate</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tasks}
-          </tbody>
-        </table>
-      )
-    // }
+    var tasks1 = this.props.tasks.map((task) => {
+        return (
+          <tr key={task.id}>
+            <td>
+              <Task task={task} 
+                    remove_task_fun={removeFun} />
+            </td>
+          </tr>
+        )
+    });
+
+    return (
+      <table className="table table-hover">
+        <tbody>
+          <tr>
+            <td >
+              <table width="100%">
+                <thead>
+                  <tr>
+                    <th width="10%">&nbsp;</th>
+                    <th width="10%">#</th>
+                    <th width="40%">Description</th>
+                    <th width="40%">Estimate</th>
+                  </tr>
+                </thead>
+              </table>
+            </td>
+          </tr>
+          {tasks1}
+        </tbody>
+      </table>
+    )
   }
 };
 
